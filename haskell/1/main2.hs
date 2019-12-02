@@ -7,12 +7,11 @@ minusTwo a = a - 2
 getFuel :: Integer -> Integer
 getFuel a = minusTwo (overThree a)
 
-recurseFuel x | x <= 0 = 0
-              | x > 0 = x + (getFuel x) + (recurseFuel x)
-
+recurseFuel total next | next <= 0 = total
+                       | next > 0 = recurseFuel (total + next) (getFuel next)
 
 go :: String -> Integer
-go line = (getFuel (read line :: Integer))
+go line = (recurseFuel 0 (getFuel (read line :: Integer)))
 
 main = do
    content <- readFile "in.txt"
